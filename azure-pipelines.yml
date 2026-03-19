@@ -4,9 +4,6 @@ trigger:
 pool:
   name: 'Default'   # your self-hosted agent
 
-variables:
-  serviceConnection: 'terraformserviceconnection'
-
 steps:
 
 # Install Terraform
@@ -14,27 +11,17 @@ steps:
   inputs:
     terraformVersion: 'latest'
 
-# ✅ FIXED INIT (no backend)
-- task: TerraformTaskV4@4
-  displayName: Init
-  inputs:
-    provider: 'azurerm'
-    command: 'init'
-    backendType: 'local'
+# Terraform Init
+- script: |
+    terraform init
+  displayName: "Terraform Init"
 
-# Plan (optional)
-- task: TerraformTaskV4@4
-  displayName: Plan
-  inputs:
-    provider: 'azurerm'
-    command: 'plan'
-    environmentServiceNameAzureRM: '$(serviceConnection)'
+# Terraform Plan
+- script: |
+    terraform plan
+  displayName: "Terraform Plan"
 
-# Apply
-- task: TerraformTaskV4@4
-  displayName: Apply
-  inputs:
-    provider: 'azurerm'
-    command: 'apply'
-    environmentServiceNameAzureRM: '$(serviceConnection)'
-    commandOptions: '-auto-approve'
+# Terraform Apply
+- script: |
+    terraform apply -auto-approve
+  displayName: "Terraform Apply"
