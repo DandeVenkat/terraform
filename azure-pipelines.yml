@@ -3,21 +3,43 @@ trigger:
 
 pool:
   name: 'Default'
-  
-  variables:
-  serviceConnection: 'terraformserviceconnection'
+
+variables:
+  ARM_CLIENT_ID: 'aad07369-49b7-4d39-adfb-03b43a367d7d'
+  ARM_SUBSCRIPTION_ID: '5336e9cc-9986-4e71-8bc7-c55d23a8dda9'
+  ARM_TENANT_ID: 'a7858caf-b969-4027-9fbc-b9b6b9d7e50d'
 
 steps:
+
+# Install Terraform
 - task: TerraformInstaller@1
   displayName: "Install Terraform"
   inputs:
     terraformVersion: 'latest'
 
+# Terraform Init
 - script: terraform init
   displayName: "Terraform Init"
+  env:
+    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+    ARM_TENANT_ID: $(ARM_TENANT_ID)
 
+# Terraform Plan
 - script: terraform plan
   displayName: "Terraform Plan"
+  env:
+    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+    ARM_TENANT_ID: $(ARM_TENANT_ID)
 
+# Terraform Apply
 - script: terraform apply -auto-approve
   displayName: "Terraform Apply"
+  env:
+    ARM_CLIENT_ID: $(ARM_CLIENT_ID)
+    ARM_CLIENT_SECRET: $(ARM_CLIENT_SECRET)
+    ARM_SUBSCRIPTION_ID: $(ARM_SUBSCRIPTION_ID)
+    ARM_TENANT_ID: $(ARM_TENANT_ID)
