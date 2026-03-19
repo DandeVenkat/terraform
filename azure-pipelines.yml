@@ -5,7 +5,7 @@ pool:
   vmImage: 'ubuntu-latest'
 
 variables:
-  serviceConnection: 'YOUR-SERVICE-CONNECTION'
+  serviceConnection: 'terraformserviceconnection'
 
 steps:
 - task: TerraformInstaller@1
