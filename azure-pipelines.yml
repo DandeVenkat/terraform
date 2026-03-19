@@ -1,0 +1,28 @@
+trigger:
+- main
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  serviceConnection: 'YOUR-SERVICE-CONNECTION'
+
+steps:
+- task: TerraformInstaller@1
+  inputs:
+    terraformVersion: 'latest'
+
+- task: TerraformTaskV4@4
+  displayName: Init
+  inputs:
+    provider: 'azurerm'
+    command: 'init'
+    backendServiceArm: '$(serviceConnection)'
+
+- task: TerraformTaskV4@4
+  displayName: Apply
+  inputs:
+    provider: 'azurerm'
+    command: 'apply'
+    environmentServiceNameAzureRM: '$(serviceConnection)'
+    commandOptions: '-auto-approve'
