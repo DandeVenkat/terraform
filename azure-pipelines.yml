@@ -2,7 +2,7 @@ trigger:
 - main
 
 pool:
-  name: 'Default'   # your self-hosted agent
+  name: 'Default'
 
 steps:
 
@@ -11,17 +11,24 @@ steps:
   inputs:
     terraformVersion: 'latest'
 
+# ✅ Azure Login (VERY IMPORTANT)
+- task: AzureCLI@2
+  displayName: "Azure Login"
+  inputs:
+    azureSubscription: 'terraformserviceconnection'
+    scriptType: 'bash'
+    scriptLocation: 'inlineScript'
+    inlineScript: |
+      az account show
+
 # Terraform Init
-- script: |
-    terraform init
+- script: terraform init
   displayName: "Terraform Init"
 
 # Terraform Plan
-- script: |
-    terraform plan
+- script: terraform plan
   displayName: "Terraform Plan"
 
 # Terraform Apply
-- script: |
-    terraform apply -auto-approve
+- script: terraform apply -auto-approve
   displayName: "Terraform Apply"
