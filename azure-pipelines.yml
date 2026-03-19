@@ -2,23 +2,34 @@ trigger:
 - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: 'my-agent-pool'   # your self-hosted agent
 
 variables:
-  serviceConnection: 'terraformserviceconnection'
+  serviceConnection: 'azure-conn'
 
 steps:
+
+# Install Terraform
 - task: TerraformInstaller@1
   inputs:
     terraformVersion: 'latest'
 
+# ✅ FIXED INIT (no backend)
 - task: TerraformTaskV4@4
   displayName: Init
   inputs:
     provider: 'azurerm'
     command: 'init'
-    
 
+# Plan (optional)
+- task: TerraformTaskV4@4
+  displayName: Plan
+  inputs:
+    provider: 'azurerm'
+    command: 'plan'
+    environmentServiceNameAzureRM: '$(serviceConnection)'
+
+# Apply
 - task: TerraformTaskV4@4
   displayName: Apply
   inputs:
