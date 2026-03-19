@@ -20,6 +20,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
+    backendType: 'local'
 
 # Plan (optional)
 - task: TerraformTaskV4@4
