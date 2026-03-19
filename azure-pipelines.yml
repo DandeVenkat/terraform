@@ -11,12 +11,12 @@ steps:
   inputs:
     terraformVersion: 'latest'
 
-# ✅ Azure Login (VERY IMPORTANT)
+# ✅ Azure Login (FIXED)
 - task: AzureCLI@2
   displayName: "Azure Login"
   inputs:
     azureSubscription: 'terraformserviceconnection'
-    scriptType: 'bash'
+    scriptType: 'ps'   # ✅ FIX HERE
     scriptLocation: 'inlineScript'
     inlineScript: |
       az account show
