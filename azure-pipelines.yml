@@ -3,6 +3,9 @@ trigger:
 
 pool:
   name: 'Default'
+  
+  variables:
+  serviceConnection: 'terraformserviceconnection'
 
 steps:
 - task: TerraformInstaller@1
