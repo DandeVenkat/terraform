@@ -17,7 +17,7 @@ steps:
   inputs:
     provider: 'azurerm'
     command: 'init'
-    backendServiceArm: '$(serviceConnection)'
+    
 
 - task: TerraformTaskV4@4
   displayName: Apply
