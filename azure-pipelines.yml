@@ -2,10 +2,10 @@ trigger:
 - main
 
 pool:
-  name: 'my-agent-pool'   # your self-hosted agent
+  name: 'Default'   # your self-hosted agent
 
 variables:
-  serviceConnection: 'azure-conn'
+  serviceConnection: 'terraformserviceconnection'
 
 steps:
 
